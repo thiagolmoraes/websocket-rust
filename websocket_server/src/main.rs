@@ -1,12 +1,6 @@
-use std::{
-    collections::HashMap,
-    net::SocketAddr,
-    sync::{Arc, Mutex},
-};
 use futures_util::{TryStreamExt, StreamExt};
-
-use tokio::net::{TcpListener, TcpStream};
-use tokio_tungstenite::{accept_async, tungstenite::protocol::Message};
+use tokio::net::TcpListener;
+use tokio_tungstenite::accept_async;
 
 
 #[tokio::main]
@@ -22,7 +16,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
             Ok(ws_stream) => {
                 println!("WebSocket connection established: {}", addr);
 
-                let (send, recv) = ws_stream.split();
+                let (_send, recv) = ws_stream.split();
 
                 recv.try_for_each(|msg| async move {
                     println!("{msg:#?}");

@@ -1,7 +1,6 @@
 use std::time::Duration;
 
 use futures_util::{StreamExt, SinkExt};
-use tokio::io::{AsyncReadExt, AsyncWriteExt};
 use tokio_tungstenite::{connect_async, tungstenite::protocol::Message};
 use rand::prelude::*;
 
@@ -17,7 +16,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     match connect_async("ws://127.0.0.1:8888").await{
         Ok((ws_stream, _)) => {
            
-           let (mut sink, mut stream) = ws_stream.split();
+           let (mut sink, _stream) = ws_stream.split();
 
            loop {
                 let number = gen_number().await?;
